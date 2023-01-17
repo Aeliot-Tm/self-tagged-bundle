@@ -1,0 +1,11 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method Aeliot\\\\SelfTaggedBundle\\\\DependencyInjection\\\\Compiler\\\\TagSelfKeyAssignerCompilerPass\\:\\:getClass\\(\\) should return class\\-string but returns string\\.$#"
+			count: 1
+			path: src/DependencyInjection/Compiler/TagSelfKeyAssignerCompilerPass.php
+
+		-
+			message: "#^Variable \\$class might not be defined\\.$#"
+			count: 1
+			path: src/DependencyInjection/Compiler/TagSelfKeyAssignerCompilerPass.php

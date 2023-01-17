@@ -1,0 +1,11 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: max
+    paths:
+        - src
+        - tests
+    symfony:
+        console_application_loader: tests/console-application.php
+        containerXmlPath: var/cache/test/Aeliot_SelfTaggedBundle_Test_Stub_KernelTestDebugContainerTmp.xml

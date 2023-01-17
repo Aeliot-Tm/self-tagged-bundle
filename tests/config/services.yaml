@@ -1,0 +1,59 @@
+parameters:
+
+services:
+    _defaults:
+        public: true
+
+    Aeliot\SelfTaggedBundle\Test\Fixture\One\:
+        resource: '../Fixture/One/*'
+        tags: [ 'one' ]
+
+    Aeliot\SelfTaggedBundle\Test\Fixture\Two\SomeParent:
+        tags: [ 'two' ]
+
+    app.tagged_service.two.child:
+        class: Aeliot\SelfTaggedBundle\Test\Fixture\Two\SomeChild
+        parent: Aeliot\SelfTaggedBundle\Test\Fixture\Two\SomeParent
+        tags: [ 'two' ]
+
+    app.tagged_service.two.descendant:
+        class: Aeliot\SelfTaggedBundle\Test\Fixture\Two\SomeDescendant
+        parent: Aeliot\SelfTaggedBundle\Test\Fixture\Two\SomeParent
+        tags: [ 'two' ]
+
+    app.tagged_service.three.init:
+        class: Aeliot\SelfTaggedBundle\Test\Fixture\Three\Holder
+        abstract: true
+        arguments:
+            $values: [ 'init' ]
+
+    app.tagged_service.three.a:
+        parent: app.tagged_service.three.init
+        calls:
+            - [ 'add', [ 'a' ] ]
+
+    app.tagged_service.three.b:
+        parent: app.tagged_service.three.a
+        calls:
+            - [ 'add', [ 'b' ] ]
+
+    app.tagged_service.three.c:
+        parent: app.tagged_service.three.b
+        abstract: false
+        calls:
+            - [ 'add', [ 'b' ] ]
+
+    app.registry.one:
+        class: Aeliot\SelfTaggedBundle\Test\Fixture\Registry
+        arguments:
+            $services: !tagged_iterator { tag: 'one', index_by: 'key' }
+
+    app.registry.two:
+        class: Aeliot\SelfTaggedBundle\Test\Fixture\Registry
+        arguments:
+            $services: !tagged_iterator { tag: 'two', index_by: 'key' }
+
+    app.registry.three:
+        class: Aeliot\SelfTaggedBundle\Test\Fixture\Registry
+        arguments:
+            $services: !tagged_iterator { tag: 'three', index_by: 'key' }
